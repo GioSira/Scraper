@@ -1,0 +1,74 @@
+{
+  // nome della façet
+  "name": "ebay_scraper",
+  // url del sito web
+  "url": "https://www.ebay.it/sch/i.html?_from=R40&_nkw=magic&_sacat=0&LH_TitleDesc=0&rt=nc&LH_Auction=1",
+  // dove le pagine web vengono salvate. Se il percorso non esiste, lo crea
+  "folder": "/Users/giovanni/PycharmProjects/Scraper/data",
+  // selezione il tipo di browser per estrarre le informazioni
+  "browser": {
+    "type": "FIREFOX",
+    // validi CHROME, FIREFOX e TOR
+    "geckodriver": "/Users/giovanni/PycharmProjects/Scraper/data/geckodriver",
+    //percorso al geckodriver
+    "firefox_binary": "/Applications/Tor Browser.app/Contents/MacOS/firefox",
+    // percorso al file firefox nel browser tor
+    "header": ""
+    // se si utilizza un header, specificare qui
+  },
+  // definisce in quale modo vengono  salvate le pagine web
+  "writer": {
+    "type": "XLS",
+    // validi SIMPLE e XLS
+    "style": "date",
+    // validi plain e date,
+    "file_name": "prova"
+    // nome del file (senza estensione)
+  },
+  // utilizzato per selezionare gli elementi da aprire nella pagina web (i link)
+  // vengono eseguiti in sequenza su ogni pagina
+  // quando si e' eseguito l'ultimo item, nella pagina corrente vengono estratti i campi di fields
+  "items": [
+    {
+      "path": "//div[@class='s-item__info clearfix']",
+      //percorso all'elemento
+      "url": "./a",
+      // dove è contenuto il link
+      "type": "href"
+      // lasciarlo fisso
+      //"next": "//a[@class='pagination__next']"
+    }
+    //{
+    //  "path": "",
+    //  "url": "",
+    //  "type": "href", // lasciarlo fisso
+    //  "next": "" // indica il link alla prossima pagina
+    //}
+  ],
+  // quali campi estrarre dalla pagina web da cui abbiamo avuto accesso tramite "item"
+  "fields": {
+    "name": {
+      // nome del campo (attribuito dall'utente)
+      "path": "//div[@id='CenterPanelInternal']//h1",
+      // percorso all'elemento da estrarre
+      "attribute": "text"
+      // i valori possono essere href per link, text per testo e src per immagini
+    },
+    "price": {
+      "path": "//span[@itemprop='price']",
+      "attribute": "text"
+    },
+    "offers": {
+      "path": "//form[@name='viactiondetails']//div[contains(@class, 'u-flL')]//a",
+      "attribute": "text"
+    },
+    "shipping": {
+      "path": "//span[@id='shSummary']//span[@id='fshippingCost']/span",
+      "attribute": "text"
+    },
+    "expires": {
+      "path": "//span[@id='vi-time-wrapperSection']/span[2]",
+      "attribute": "text"
+    }
+  }
+}
